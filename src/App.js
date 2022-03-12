@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 //Basic Dynamic content load
 /*function App() {
@@ -47,7 +48,66 @@ function Show (props){
 }
 */
 
-//Learning State
+//Learning State, stateHandle
+
+/*function App(){
+  return(
+    <div className ="app">
+      <Counter></Counter>
+    </div>
+  );
+}
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  const handleIncrease = () => setCount (count + 1);
+  const handleDecrease = () => setCount (count - 1);
+  return(
+    <div>
+      <h1>count : {count}</h1>
+      <button onClick={handleIncrease}>increase</button>
+      <button onClick={handleDecrease}>decrease</button>
+    </div>
+  )
+}
+*/
+
+//Load Dynamic Data, Api Call Useeffect Integrate State
+
+function App(){
+  return (
+    <div className='App'>
+      <ExternalUsers></ExternalUsers>
+    </div>
+  );
+}
+function ExternalUsers(){
+  const [users,setUsers] = useState([]);
+  useEffect(() =>{
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data => setUsers(data))
+  },[])
+
+  return (
+    <div>
+      <h1>External Users</h1>
+    {
+      users.map(user => <User name={user.name} email={user.email}></User>)
+    }
+    </div>
+  )
+}
+
+function User(props){
+  return (
+    <div>
+      <h2>Name:{props.name} </h2>
+      <h3>Email:{props.email} </h3>
+      <br></br>
+    </div>
+  )
+}
 
 
 
